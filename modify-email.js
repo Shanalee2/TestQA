@@ -349,8 +349,17 @@ downloadBtn.addEventListener('click', ()=>{
 // Generate an .eml file suitable for Outlook (CC, Subject using RITM, body = preview + signature)
 if(generateEmailBtn){
   generateEmailBtn.addEventListener('click', async ()=>{
-    const r = ritm.value.trim()
-    if(!r){ if(!confirm('RITM is empty. Continue with generic subject?')) return }
+    let r = ritm.value.trim()
+    
+    // Build subject with all RITM numbers
+    let subject = ''
+    if(entries.length > 0){
+      const ritmNumbers = entries.map(e=>e.ritm || 'RITMxxxxxx').join(',')
+      subject = `${ritmNumbers} | Upgrade Completed`
+    }else{
+      if(!r){ if(!confirm('RITM is empty. Continue with generic subject?')) return }
+      subject = `${r || 'RITMxxxxxx'} | Upgrade Completed`
+    }
 
     const toVal = (toInput && toInput.value) ? toInput.value.trim() : ''
     const managerVal = (managerEmailInput && managerEmailInput.value) ? managerEmailInput.value.trim() : ''
@@ -361,8 +370,6 @@ if(generateEmailBtn){
       managerVal.split(/[;,\s]+/).forEach(e=>{ if(e && !baseCC.includes(e)) baseCC.push(e) })
     }
     const cc = baseCC.join(', ')
-
-    const subject = `${r || 'RITMxxxxxx'} | Upgrade Completed`
 
     const iconUrl = await loadCompanyIcon()
     const iconInfo = parseDataUrl(iconUrl)

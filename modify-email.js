@@ -261,12 +261,22 @@ function updateEntryList(){
       <div style="flex:1;font-size:0.9rem;">
         <strong>${e.ritm || 'N/A'}</strong> | ${e.requestedFor || 'N/A'} | ${e.avdName || 'N/A'} | ${e.modifyStandardFor || 'N/A'}
       </div>
-      <button class="danger small" onclick="removeEntry(${i})" style="padding:4px 8px;font-size:0.85rem;">🗑</button>
+      <button class="danger small entry-remove-btn" data-index="${i}" style="padding:4px 8px;font-size:0.85rem;">🗑</button>
     </div>
   `).join('')
 }
 
-window.removeEntry = removeEntry
+// Event delegation for remove buttons
+if(entriesContainer){
+  entriesContainer.addEventListener('click', (e)=>{
+    if(e.target.classList.contains('entry-remove-btn')){
+      const index = parseInt(e.target.dataset.index)
+      if(!isNaN(index)){
+        removeEntry(index)
+      }
+    }
+  })
+}
 
 function updatePreview(){
   if(!preview) return

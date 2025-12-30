@@ -1,1 +1,1 @@
-# EdwardTradingBot
+Test QA Area

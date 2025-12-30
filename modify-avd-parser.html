@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Modify AVD Parser</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="btn" href="avd-tools.html">← Back to AVD Tools</a>
+    <h1 style="margin:0">Modify AVD Parser for Email Template</h1>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>Input</h2>
+      <textarea id="raw" placeholder="Paste ServiceNow details here..."></textarea>
+      <div class="actions">
+        <button class="warn" id="parseBtn">🔍 Parse</button>
+        <button class="primary" id="sampleBtn">🧪 Fill Sample</button>
+        <button class="danger" id="clearRawBtn">🧹 Clear Input</button>
+      </div>
+
+      <div class="meta-fields">
+        <input id="ritm" placeholder="RITM number">
+        <input id="requestedFor" placeholder="Requested for">
+        <input id="avdName" placeholder="AVD Name">
+        <input id="modifyStandardFor" placeholder="Modify standard for">
+        <input id="toEmails" placeholder="To (comma-separated) - optional">
+        <input id="managerEmail" placeholder="Manager Email (added to CC) - optional">
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="signatureName" placeholder="Signature full name (for footer)">
+          <span id="signatureSavedIndicator" class="saved-indicator" aria-hidden="true">✓ Saved</span>
+        </div>
+        <div class="signature-email-row">
+          <select id="signatureEmail" aria-label="Saved signature emails">
+            <option value="">Select signature email…</option>
+          </select>
+          <input id="newSignatureEmail" placeholder="Add email">
+          <button type="button" class="primary small" id="addSignatureEmailBtn">＋</button>
+          <button type="button" class="danger small" id="deleteSignatureEmailBtn">🗑</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="success" id="copyBtn">📋 Copy</button>
+        <button class="primary" id="downloadBtn">⬇️ Download</button>
+        <button class="primary" id="generateEmailBtn">📧 Generate Email (.eml - editable draft)</button>
+        <button class="danger" id="clearFieldsBtn">🧼 Clear Fields</button>
+        <button class="btn small" id="clearSavedBtn">🗑️ Clear Saved Settings</button>
+      </div>
+      <p class="helper">Email draft now includes a formatted signature/footer with your name, email, and the company icon.</p> 
+      <p class="helper">Downloaded .eml will open as an editable draft in Outlook (Subject and Body are editable).</p> 
+    </div>
+
+    <div class="card">
+      <h2>Preview</h2>
+      <div id="preview" class="preview rich-preview">AVD Modify request has been completed.
+
+RITM number:
+Requested for :
+AVD Name:
+Modify standard for :</div>
+    </div>
+  </main>
+
+  <script src="scripts.js"></script>
+  <script src="modify-email.js"></script>
+</body>
+</html>

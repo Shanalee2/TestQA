@@ -131,15 +131,15 @@ function buildSignatureHtml(name,email,icon){
   </div>`
 }
 
-function buildHtmlBody(mainText,name,email,icon){
+function buildHtmlBody(mainText,name,email,icon,textColor='#0b1220'){
   const safeMain = escapeHtml(mainText).replace(/\n/g,'<br>')
   const mainHtml = `<div>${safeMain}</div>`
   const signatureHtml = buildSignatureHtml(name,email,icon)
-  return `<div style="font-family:'Segoe UI', Arial, sans-serif;font-size:14px;line-height:1.5;color:#e6eef8;">${mainHtml}${signatureHtml}</div>`
+  return `<div style="font-family:'Segoe UI', Arial, sans-serif;font-size:14px;line-height:1.5;color:${textColor};">${mainHtml}${signatureHtml}</div>`
 }
 
 function buildBodies(options={}){
-  const { iconMode='data', iconDataUrl='', iconCid='' } = options
+  const { iconMode='data', iconDataUrl='', iconCid='', textColor='#0b1220' } = options
   const c = (typeof changeNumber !== 'undefined' && changeNumber && changeNumber.value) ? changeNumber.value.trim() : ''
   const name = signatureNameInput && signatureNameInput.value ? signatureNameInput.value.trim() : ''
   const sigEmail = signatureEmailInput && signatureEmailInput.value ? signatureEmailInput.value.trim() : ''
@@ -148,7 +148,7 @@ function buildBodies(options={}){
   const plainBody = `${main}\n\n${plainSig}`.trim()
   const icon = iconMode === 'cid' && iconCid ? { mode:'cid', cid: iconCid } : { mode:'data', dataUrl: iconDataUrl || companyIconDataUrl }
   console.log('buildBodies icon:', icon.mode, icon.dataUrl ? 'dataUrl length: ' + icon.dataUrl.length : '', icon.cid || '')
-  const htmlBody = buildHtmlBody(main, name, sigEmail, icon)
+  const htmlBody = buildHtmlBody(main, name, sigEmail, icon, textColor)
   return { plainBody, htmlBody }
 }
 
@@ -204,7 +204,7 @@ function buildMsg(r,c,f,a,m){
 
 function updatePreview(){
   if(!preview) return
-  const { htmlBody } = buildBodies({ iconMode:'data', iconDataUrl: companyIconDataUrl })
+  const { htmlBody } = buildBodies({ iconMode:'data', iconDataUrl: companyIconDataUrl, textColor: '#e6eef8' })
   preview.innerHTML = htmlBody
 } 
 
